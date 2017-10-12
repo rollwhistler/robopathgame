@@ -1,0 +1,48 @@
+{
+  "name": "pech-fruits-api",
+  "version": "0.0.1",
+  "description": "Pech Fruits Api",
+  "license": "UNLICENSED",
+  "private": true,
+  "engines": {
+    "node": ">=8"
+  },
+  "scripts": {
+    "prestart": "sleep 5 && npm run migrate up && npm run migrate up:test",
+    "start": "nodemon --ignore 'client/' --delay 2.5 --inspect=3001 server.js",
+    "sdk": "./node_modules/.bin/lb-sdk server /usr/src/app/src/app/shared/sdk -w enabled",
+    "migrate": "db-migrate",
+    "migrate:redo:test": "npm run migrate reset:test && npm run migrate up:test",
+    "migrate:redo": "npm run migrate reset:test && npm run migrate reset && npm run migrate up && npm run migrate up:test"
+  },
+  "dependencies": {
+    "compression": "~1.7",
+    "cors": "~2.8",
+    "db-migrate": "~0.10.0-beta.24",
+    "extend": "~3.0",
+    "helmet": "~3.8",
+    "loopback": "~3.11",
+    "loopback-boot": "~3.0",
+    "loopback-component-explorer": "~5.1",
+    "loopback-connector-mysql": "~5.1",
+    "npm-watch": "~0.2",
+    "options": "~0.0.6",
+    "serve-favicon": "~2.4",
+    "strong-error-handler": "~2.2"
+  },
+  "devDependencies": {
+    "@mean-expert/loopback-sdk-builder": "^2.1.0-rc.12.1",
+    "codelyzer": "~3.2",
+    "db-migrate-mysql": "~1.1",
+    "eslint": "~4.7",
+    "eslint-config-loopback": "~8.0",
+    "loopback-cli": "~4.0",
+    "ncp": "~2.0",
+    "nodemon": "~1.12",
+    "nsp": "~2.8"
+  },
+  "repository": {
+    "type": "",
+    "url": ""
+  }
+}

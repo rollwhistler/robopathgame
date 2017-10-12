@@ -1,0 +1,69 @@
+version: '2'
+
+services:
+
+  db:
+    image: mysql:5.7
+    mem_limit: 256M
+    environment:
+      MYSQL_ROOT_PASSWORD: pech
+      MYSQL_DATABASE: pech
+      MYSQL_USER: pech
+      MYSQL_PASSWORD: pech
+
+  adminer:
+    mem_limit: 128M
+    depends_on:
+    - db
+    image: clue/adminer
+    ports:
+    - "8080:80"
+
+  frontend:
+    mem_limit: 512M
+    user: node
+    depends_on:
+    - db
+    - adminer
+    - api
+    image: bluerose/docker-node
+    ports:
+    - "4200:4200"
+    volumes:
+    - ./frontend:/usr/src/app
+    - ./api:/usr/src/api
+    working_dir: /usr/src/app
+    entrypoint: bash -c "npm install && npm start"
+
+  admin:
+    mem_limit: 512M
+    user: node
+    depends_on:
+    - db
+    - adminer
+    - api
+    image: bluerose/docker-node
+    ports:
+    - "4300:4200"
+    volumes:
+    - ./admin:/usr/src/app
+    - ./api:/usr/src/api
+    working_dir: /usr/src/app
+    entrypoint: bash -c "npm install && npm start"
+
+  api:
+    mem_limit: 512M
+    user: node
+    depends_on:
+    - db
+    - adminer
+    image: bluerose/docker-node
+    ports:
+    - "3000:3000"
+    - "3001:3001"
+    volumes:
+    - ./api:/usr/src/app
+    - ./frontend:/usr/src/frontend
+    - ./admin:/usr/src/admin
+    working_dir: /usr/src/app
+    entrypoint: bash -c "npm install && npm start"

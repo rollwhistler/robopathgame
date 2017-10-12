@@ -1,0 +1,43 @@
+{
+    "_meta": {
+        "sources": ["./models"],
+        "mixins": ["./mixins"]
+    },
+    "AccessToken": {
+        "dataSource": "db",
+        "public": false,
+        "relations": {
+            "user": {
+                "type": "belongsTo",
+                "model": "RoboUser",
+                "foreignKey": "userId"
+            },
+            "roles": {
+                "type": "hasMany",
+                "model": "Role",
+                "through": "RoleMapping",
+                "keyThrough": "principalId",
+                "foreignKey": "userId"
+            }
+        }
+    },
+    "ACL": {
+        "dataSource": "db",
+        "public": false
+    },
+    "RoleMapping": {
+        "dataSource": "db",
+        "public": false,
+        "options": {
+            "strictObjectIDCoercion": true
+        }
+    },
+    "Role": {
+        "dataSource": "db",
+        "public": true
+    },
+    "RoboUser": {
+        "dataSource": "db",
+        "public": true
+    }
+}

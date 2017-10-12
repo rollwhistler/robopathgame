@@ -1,0 +1,82 @@
+<div class="col-lg-12">
+  <div class="wrapper wrapper-content animated fadeIn">
+
+    <div class="ibox">
+      <div class="ibox-title">
+        <h5>List</h5>
+        <div class="ibox-tools">
+          <button type="button" class="btn btn-danger btn-xs" *ngIf="displayDelete" (click)="prepareDeleteSelectedItems()">
+            <i class="fa fa-trash"></i>
+            Delete Selected
+          </button>
+
+          <a routerLink="add" class="btn btn-primary btn-xs">
+            <i class="fa fa-plus"></i>
+            Add
+          </a>
+        </div>
+      </div>
+      <div class="ibox-content">
+        <div class="row m-b-sm m-t-sm">
+          <div class="col-md-1">
+            <button type="button" id="loading-example-btn" class="btn btn-white btn-sm" (click)="fetchFromAPI()">
+              <i class="fa fa-refresh"></i> Refresh</button>
+          </div>
+          <div class="col-md-11">
+            <div class="input-group">
+              <form [formGroup]="searchForm" role="form" novalidate (ngSubmit)="onFilterChange()">
+                <input type="text" placeholder="Search" class="input-sm form-control" formControlName="query">
+              </form>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-sm btn-primary" (click)="onFilterChange()"> Go!</button>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-list">
+
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>
+                  <div class="form-check" id="selectAllCheck">
+                    <label class="form-check-label">
+                      <input class="form-check-input" type="checkbox" value="" [checked]="selectAll" (change)="onSelectAll()">
+                    </label>
+                  </div>
+                </th>
+                <th *ngFor="let column of columns" [innerHtml]="column.renderTitle(column)"></th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let item of items">
+
+              <td>
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox" [checked]="item.selected" (change)="onSelected(item)">
+                  </label>
+                </div>
+              </td>
+
+              <td *ngFor="let column of columns" [innerHtml]="column.renderCell(column, item)"></td>
+
+              <td class="project-actions">
+                <a [routerLink]="item.id" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Edit </a>
+                <button class="btn btn-danger btn-sm" type="button" (click)="prepareDeleteItem(item)">
+                  <i class="fa fa-trash"></i> Delete
+                </button>
+              </td>
+
+            </tr>
+            </tbody>
+          </table>
+
+          <ngb-pagination [collectionSize]="count" [(page)]="currentPage" [pageSize]="filter.limit" (pageChange)="onPageChange($event)" aria-label="Default pagination"></ngb-pagination>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

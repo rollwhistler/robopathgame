@@ -1,0 +1,5 @@
+RENAME TABLE `User` TO `RoboUser`;
+
+ALTER TABLE `RoboUser`
+ADD COLUMN `firstName` VARCHAR(64),
+ADD COLUMN `familyName` VARCHAR(128);

@@ -1,0 +1,10 @@
+{
+  "db": {
+    "name": "db",
+    "connector": "mysql",
+    "host": "db",
+    "username": "pech",
+    "password": "pech",
+    "database": "pech"
+  }
+}

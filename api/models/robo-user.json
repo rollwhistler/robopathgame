@@ -1,0 +1,36 @@
+{
+    "name": "RoboUser",
+    "base": "User",
+    "idInjection": true,
+    "options": {
+        "realmRequired": false,
+        "validateUpsert": true
+    },
+    "properties": {
+        "firstName": {
+            "type": "string"
+        },
+        "familyName": {
+            "type": "string"
+        }
+    },
+    "scope": {
+        "include": ["roles"]
+    },
+    "validations": [],
+    "relations": {
+        "roles": {
+            "type": "hasMany",
+            "model": "Role",
+            "through": "RoleMapping",
+            "keyThrough": "principalId",
+            "foreignKey": "id"
+        }
+    },
+    "acls": [{
+        "principalType": "ROLE",
+        "principalId": "admin",
+        "permission": "ALLOW"
+    }],
+    "methods": {}
+}
